@@ -1,0 +1,402 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>ApexForms • Premium Interactive Form & Validation</title>
+  <meta name="description" content="A state-of-the-art interactive registration and contact form with real-time JavaScript validation, password strength evaluation, and animated feedback.">
+  
+  <!-- Google Fonts: Plus Jakarta Sans & Outfit -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@400;500;600;700;800&family=Plus+Jakarta+Sans:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+  
+  <link rel="stylesheet" href="style.css">
+</head>
+<body data-theme="dark">
+  <!-- Dynamic Ambient Glow Background -->
+  <div class="ambient-glow glow-1"></div>
+  <div class="ambient-glow glow-2"></div>
+  <div class="ambient-glow glow-3"></div>
+
+  <!-- Header Navigation -->
+  <header class="app-header">
+    <div class="brand-badge">
+      <div class="brand-icon">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+          <path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/>
+          <path d="m9 12 2 2 4-4"/>
+        </svg>
+      </div>
+      <span class="brand-name">Apex<span class="brand-accent">Guard</span></span>
+    </div>
+
+    <div class="header-actions">
+      <div class="completion-pill" id="completion-pill">
+        <span class="pill-dot"></span>
+        <span class="pill-text" id="completion-text">0 / 6 Completed</span>
+      </div>
+
+      <button id="theme-toggle" class="icon-btn" aria-label="Toggle dark/light theme" title="Toggle Theme">
+        <svg id="theme-moon" class="theme-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+          <path d="M12 3a6 6 0 0 0 9 9 9 9 0 1 1-9-9Z"/>
+        </svg>
+        <svg id="theme-sun" class="theme-icon hidden" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+          <circle cx="12" cy="12" r="4"/>
+          <path d="M12 2v2M12 20v2M4.93 4.93l1.41 1.41M17.66 17.66l1.41 1.41M2 12h2M20 12h2M6.34 17.66l-1.41 1.41M19.07 4.93l-1.41 1.41"/>
+        </svg>
+      </button>
+
+      <button id="sound-toggle" class="icon-btn active" aria-label="Toggle UI Audio" title="Toggle Audio Feedback">
+        <svg class="audio-on-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+          <polygon points="11 5 6 9 2 9 2 15 6 15 11 19 11 5"/>
+          <path d="M15.54 8.46a5 5 0 0 1 0 7.07"/>
+          <path d="M19.07 4.93a10 10 0 0 1 0 14.14"/>
+        </svg>
+        <svg class="audio-off-icon hidden" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+          <polygon points="11 5 6 9 2 9 2 15 6 15 11 19 11 5"/>
+          <line x1="23" y1="9" x2="17" y2="15"/>
+          <line x1="17" y1="9" x2="23" y2="15"/>
+        </svg>
+      </button>
+    </div>
+  </header>
+
+  <!-- Main Container -->
+  <main class="main-wrapper">
+    <section class="card-container glass-card" id="form-card">
+      <!-- Progress Bar Track -->
+      <div class="progress-track" aria-hidden="true">
+        <div class="progress-fill" id="progress-bar"></div>
+      </div>
+
+      <!-- Header Content -->
+      <div class="form-intro">
+        <span class="subheading-tag">Project 4 • Form Design & Validation</span>
+        <h1 class="main-heading">Create Your Account</h1>
+        <p class="intro-description">
+          Experience frictionless real-time input verification with instant visual cues and security rating.
+        </p>
+      </div>
+
+      <!-- Notification Banner / Alert -->
+      <div id="status-banner" class="status-banner hidden" role="alert">
+        <div class="banner-icon-box" id="banner-icon"></div>
+        <div class="banner-content">
+          <div class="banner-title" id="banner-title"></div>
+          <div class="banner-desc" id="banner-desc"></div>
+        </div>
+        <button type="button" class="banner-close" id="banner-close" aria-label="Close message">&times;</button>
+      </div>
+
+      <!-- Interactive Form -->
+      <form id="registration-form" novalidate autocomplete="off">
+        
+        <!-- Field 1: Full Name -->
+        <div class="form-group" id="group-fullname">
+          <label for="fullname" class="field-label">
+            Full Name <span class="required-star">*</span>
+          </label>
+          <div class="input-wrapper">
+            <span class="input-prefix-icon">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                <path d="M19 21v-2a4 4 0 0 0-4-4H9a4 4 0 0 0-4 4v2"/>
+                <circle cx="12" cy="7" r="4"/>
+              </svg>
+            </span>
+            <input 
+              type="text" 
+              id="fullname" 
+              name="fullname" 
+              placeholder="e.g. Arijit Mukherjee" 
+              autocomplete="name"
+              required
+              aria-describedby="fullname-msg"
+            />
+            <span class="validation-indicator" id="fullname-indicator"></span>
+          </div>
+          <div class="field-feedback" id="fullname-msg"></div>
+        </div>
+
+        <!-- Field 2: Email Address -->
+        <div class="form-group" id="group-email">
+          <label for="email" class="field-label">
+            Email Address <span class="required-star">*</span>
+          </label>
+          <div class="input-wrapper">
+            <span class="input-prefix-icon">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                <rect width="20" height="16" x="2" y="4" rx="2"/>
+                <path d="m22 7-8.97 5.7a1.94 1.94 0 0 1-2.06 0L2 7"/>
+              </svg>
+            </span>
+            <input 
+              type="email" 
+              id="email" 
+              name="email" 
+              placeholder="name@domain.com" 
+              autocomplete="email"
+              required
+              aria-describedby="email-msg"
+            />
+            <span class="validation-indicator" id="email-indicator"></span>
+          </div>
+          <!-- Quick domain chip suggestions -->
+          <div class="email-suggestions hidden" id="email-suggestions">
+            <span class="suggestion-label">Quick add:</span>
+            <button type="button" class="domain-chip" data-domain="@gmail.com">@gmail.com</button>
+            <button type="button" class="domain-chip" data-domain="@outlook.com">@outlook.com</button>
+            <button type="button" class="domain-chip" data-domain="@icloud.com">@icloud.com</button>
+          </div>
+          <div class="field-feedback" id="email-msg"></div>
+        </div>
+
+        <!-- Field 3: Phone Number -->
+        <div class="form-group" id="group-phone">
+          <label for="phone" class="field-label">
+            Phone Number <span class="required-star">*</span>
+          </label>
+          <div class="input-wrapper phone-wrapper">
+            <div class="country-badge">
+              <span class="flag-icon">🇮🇳</span>
+              <span class="country-code">+91</span>
+            </div>
+            <input 
+              type="tel" 
+              id="phone" 
+              name="phone" 
+              placeholder="98765 43210" 
+              maxlength="15"
+              autocomplete="tel"
+              required
+              aria-describedby="phone-msg"
+            />
+            <span class="validation-indicator" id="phone-indicator"></span>
+          </div>
+          <div class="field-feedback" id="phone-msg"></div>
+        </div>
+
+        <!-- Field 4: Password -->
+        <div class="form-group" id="group-password">
+          <div class="label-row">
+            <label for="password" class="field-label">
+              Password <span class="required-star">*</span>
+            </label>
+            <span class="strength-tag" id="strength-badge">Too Weak</span>
+          </div>
+          
+          <div class="input-wrapper">
+            <span class="input-prefix-icon">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                <rect width="18" height="11" x="3" y="11" rx="2" ry="2"/>
+                <path d="M7 11V7a5 5 0 0 1 10 0v4"/>
+              </svg>
+            </span>
+            <input 
+              type="password" 
+              id="password" 
+              name="password" 
+              placeholder="Create strong password" 
+              autocomplete="new-password"
+              required
+              aria-describedby="password-msg"
+            />
+            <button type="button" id="toggle-password" class="visibility-btn" aria-label="Toggle password visibility">
+              <svg class="eye-open" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                <path d="M2 12s3-7 10-7 10 7 10 7-3 7-10 7-10-7-10-7Z"/>
+                <circle cx="12" cy="12" r="3"/>
+              </svg>
+              <svg class="eye-closed hidden" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                <path d="m9.88 9.88 4.24 4.24"/>
+                <path d="M10.73 5.08A10.43 10.43 0 0 1 12 5c7 0 10 7 10 7a13.16 13.16 0 0 1-1.67 2.68"/>
+                <path d="M6.61 6.61A13.526 13.526 0 0 0 2 12s3 7 10 7a9.74 9.74 0 0 0 5.39-1.61"/>
+                <line x1="2" y1="2" x2="22" y2="22"/>
+              </svg>
+            </button>
+            <span class="validation-indicator" id="password-indicator"></span>
+          </div>
+
+          <!-- Password Strength Meter (Visual 4-segment gauge) -->
+          <div class="strength-meter-container" aria-hidden="true">
+            <div class="meter-bar" id="meter-segment-1"></div>
+            <div class="meter-bar" id="meter-segment-2"></div>
+            <div class="meter-bar" id="meter-segment-3"></div>
+            <div class="meter-bar" id="meter-segment-4"></div>
+          </div>
+
+          <!-- Password Criteria Checklist -->
+          <div class="password-criteria-box" id="criteria-box">
+            <div class="criterion" id="rule-length">
+              <span class="crit-icon">○</span> At least 8 characters
+            </div>
+            <div class="criterion" id="rule-upper">
+              <span class="crit-icon">○</span> Uppercase letter (A-Z)
+            </div>
+            <div class="criterion" id="rule-number">
+              <span class="crit-icon">○</span> Number (0-9)
+            </div>
+            <div class="criterion" id="rule-special">
+              <span class="crit-icon">○</span> Special character (!@#$%^&*)
+            </div>
+          </div>
+          <div class="field-feedback" id="password-msg"></div>
+        </div>
+
+        <!-- Field 5: Confirm Password -->
+        <div class="form-group" id="group-confirm-password">
+          <label for="confirm-password" class="field-label">
+            Confirm Password <span class="required-star">*</span>
+          </label>
+          <div class="input-wrapper">
+            <span class="input-prefix-icon">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                <path d="M20 13c0 5-3.5 7.5-7.66 8.95a1 1 0 0 1-.67-.01C7.5 20.5 4 18 4 13V6a1 1 0 0 1 1-1c2 0 4.5-1.2 6.24-2.72a1.17 1.17 0 0 1 1.52 0C14.51 3.81 17 5 19 5a1 1 0 0 1 1 1z"/>
+                <path d="m9 12 2 2 4-4"/>
+              </svg>
+            </span>
+            <input 
+              type="password" 
+              id="confirm-password" 
+              name="confirm-password" 
+              placeholder="Re-enter your password" 
+              autocomplete="new-password"
+              required
+              aria-describedby="confirm-password-msg"
+            />
+            <span class="validation-indicator" id="confirm-password-indicator"></span>
+          </div>
+          <div class="field-feedback" id="confirm-password-msg"></div>
+        </div>
+
+        <!-- Field 6: Role / Profile Selection -->
+        <div class="form-group">
+          <label class="field-label">Account Type</label>
+          <div class="role-selector">
+            <label class="role-card active" for="role-dev">
+              <input type="radio" name="role" id="role-dev" value="Developer" checked>
+              <div class="role-icon">💻</div>
+              <div class="role-info">
+                <span class="role-title">Developer</span>
+                <span class="role-sub">Building web & apps</span>
+              </div>
+            </label>
+
+            <label class="role-card" for="role-design">
+              <input type="radio" name="role" id="role-design" value="Designer">
+              <div class="role-icon">🎨</div>
+              <div class="role-info">
+                <span class="role-title">Designer</span>
+                <span class="role-sub">UI/UX & Graphics</span>
+              </div>
+            </label>
+
+            <label class="role-card" for="role-student">
+              <input type="radio" name="role" id="role-student" value="Student">
+              <div class="role-icon">🎓</div>
+              <div class="role-info">
+                <span class="role-title">Student</span>
+                <span class="role-sub">Learning & projects</span>
+              </div>
+            </label>
+          </div>
+        </div>
+
+        <!-- Field 7: Terms & Conditions Checkbox -->
+        <div class="form-group checkbox-group" id="group-terms">
+          <label class="custom-checkbox-container" for="terms">
+            <input type="checkbox" id="terms" name="terms" required aria-describedby="terms-msg">
+            <span class="checkmark-box">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round">
+                <polyline points="20 6 9 17 4 12"/>
+              </svg>
+            </span>
+            <span class="checkbox-label-text">
+              I accept the <a href="#terms-modal" id="terms-link">Terms of Service</a> and <a href="#privacy-modal" id="privacy-link">Privacy Policy</a> <span class="required-star">*</span>
+            </span>
+          </label>
+          <div class="field-feedback" id="terms-msg"></div>
+        </div>
+
+        <!-- Action Buttons -->
+        <div class="action-buttons-container">
+          <button type="submit" id="submit-btn" class="primary-btn">
+            <span class="btn-text">Submit Registration</span>
+            <span class="btn-spinner hidden" id="btn-spinner"></span>
+            <svg class="btn-arrow" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+              <line x1="5" y1="12" x2="19" y2="12"></line>
+              <polyline points="12 5 19 12 12 19"></polyline>
+            </svg>
+          </button>
+
+          <button type="button" id="reset-btn" class="secondary-btn" title="Clear all fields">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+              <path d="M3 12a9 9 0 0 1 9-9 9.75 9.75 0 0 1 6.74 2.74L21 8"/>
+              <path d="M21 3v5h-5"/>
+              <path d="M21 12a9 9 0 0 1-9 9 9.75 9.75 0 0 1-6.74-2.74L3 16"/>
+              <path d="M3 21v-5h5"/>
+            </svg>
+            <span>Reset</span>
+          </button>
+        </div>
+
+      </form>
+      
+      <!-- Footer details -->
+      <footer class="form-footer">
+        <p>🔒 256-bit SSL encrypted • Instant JavaScript Client Validation</p>
+      </footer>
+    </section>
+  </main>
+
+  <!-- Success Modal with Celebration Confetti -->
+  <div class="modal-backdrop hidden" id="success-modal">
+    <canvas id="confetti-canvas"></canvas>
+    <div class="modal-card">
+      <div class="success-animation-wrapper">
+        <div class="checkmark-circle">
+          <svg class="checkmark-svg" viewBox="0 0 52 52">
+            <circle class="checkmark-circle-path" cx="26" cy="26" r="25" fill="none"/>
+            <path class="checkmark-check-path" fill="none" d="M14.1 27.2l7.1 7.2 16.7-16.8"/>
+          </svg>
+        </div>
+      </div>
+      <h2 class="modal-title">Registration Verified!</h2>
+      <p class="modal-subtitle">Your form data passed all client-side validation rules seamlessly.</p>
+      
+      <div class="data-receipt">
+        <div class="receipt-row">
+          <span class="receipt-label">Name</span>
+          <span class="receipt-val" id="receipt-name">-</span>
+        </div>
+        <div class="receipt-row">
+          <span class="receipt-label">Email</span>
+          <span class="receipt-val" id="receipt-email">-</span>
+        </div>
+        <div class="receipt-row">
+          <span class="receipt-label">Phone</span>
+          <span class="receipt-val" id="receipt-phone">-</span>
+        </div>
+        <div class="receipt-row">
+          <span class="receipt-label">Account</span>
+          <span class="receipt-val" id="receipt-role">-</span>
+        </div>
+        <div class="receipt-row">
+          <span class="receipt-label">Status</span>
+          <span class="receipt-badge">✓ Validated</span>
+        </div>
+      </div>
+
+      <div class="modal-actions">
+        <button type="button" class="primary-btn full-w" id="modal-close-btn">
+          <span>Done & Continue</span>
+        </button>
+      </div>
+    </div>
+  </div>
+
+  <!-- Toast Notification Container -->
+  <div class="toast-container" id="toast-container" aria-live="polite"></div>
+
+  <script src="script.js"></script>
+</body>
+</html>
