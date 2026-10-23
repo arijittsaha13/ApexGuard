@@ -252,7 +252,7 @@ document.addEventListener('DOMContentLoaded', () => {
       if (showError) setFieldInvalid(groupEmail, emailMsg, 'Please enter your email address');
       validStatus.email = false;
     } else if (!emailRegex.test(value)) {
-      if (showError) setFieldInvalid(groupEmail, emailMsg, 'Please enter a valid email (e.g. name@domain.com)');
+      if (showError) setFieldInvalid(groupEmail, emailMsg, 'Please enter a valid email (e.g. alex.morgan@company.com)');
       validStatus.email = false;
     } else {
       setFieldValid(groupEmail, emailMsg);
